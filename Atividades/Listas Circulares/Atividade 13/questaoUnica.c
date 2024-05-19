@@ -1,7 +1,7 @@
 /* listas duplamente encadeadas circulares com nome, média final e quantidade de faltas de duas turmas de alunos
 ordenada alfabeticamente */
 
-// código em desenvolvimento 
+// finalizado!
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -55,7 +55,7 @@ void cadastrar(PontLDEC* lista, char nomeAux[40]){
         novo->prox = novo;
         novo->ant = novo;
         lista->qtd = 1;
-        printf("Cadastro realizado!\n");
+        printf("Cadastro vazio realizado!\n");
 
     } else { // nao vazia
         if (strcmp(lista->inicio->nome,nomeAux) == FALSE){ // igual ao primeiro
@@ -95,7 +95,7 @@ void cadastrar(PontLDEC* lista, char nomeAux[40]){
             lista->fim->prox = novo;
             lista->fim = novo;
             lista->qtd++;
-            printf("\nValor inserido.\n");
+            printf("\nCadastro realizado!\n");
 
         } else { // procura o nome e insere no meio
             TNoLDEC* novo = (TNoLDEC*)malloc(sizeof(TNoLDEC));
@@ -219,6 +219,51 @@ void exibirAlunoEspecifico(PontLDEC* lista){
     } else {
         printf("\nNome: %s\nMedia final: %.1f\nFaltas: %d\n",aux->nome,aux->media,aux->faltas);
     }
+}
+
+void remover(PontLDEC* lista){
+    printf("\nInsira o nome do aluno: ");
+    char nome[40];
+    scanf("%s",nome);
+    TNoLDEC* aux = consultar(lista,nome);
+    if(aux == NULL){
+        printf("Aluno nao pertencente a turma.\n");
+    } else {
+        if(aux == lista->inicio){ // retira do inicio
+            lista->inicio->prox->ant = lista->fim;
+            lista->inicio = lista->inicio->prox;
+            lista->fim->prox = lista->inicio;
+            free(aux);
+            lista->qtd--;
+            printf("Aluno removido!\n");
+        } else if (aux == lista->fim){
+            lista->fim->ant->prox = lista->inicio;
+            lista->fim = lista->fim->ant;
+            lista->inicio->ant = lista->fim;
+            lista->qtd--;
+            printf("Aluno removido!\n");
+        } else {
+            aux->ant->prox = aux->prox;
+            aux->prox->ant = aux->ant;
+            free(aux);
+            lista->qtd--;
+            printf("Aluno removido!\n");
+        }
+    }
+}
+
+void limparTurma(PontLDEC* lista){
+    TNoLDEC* aux = lista->inicio;
+    while(lista->qtd != 0){
+        lista->inicio->prox->ant = lista->fim;
+        lista->inicio = lista->inicio->prox;
+        lista->fim->prox = lista->inicio;
+        free(aux);
+        lista->qtd--;
+        TNoLDEC* aux = lista->inicio;
+        aux = aux->prox;
+    }
+    printf("\nCadastros limpos.\n");
 }
 
 
@@ -356,10 +401,48 @@ int main(){
                 }
                 break;
             case 6:
-                printf("\nEm desenvolvimento\n");
+                printf("Que turma? (1/2): ");
+                scanf("%d",&turma);
+                while(turma != 1 && turma != 2){
+                    printf("Opcao invalida. Tente novamente: ");
+                    scanf("%d",&turma);
+                }
+
+                if(turma == 1){
+                    if(isEmpty(&listaUm) == TRUE){
+                        printf("\nTurma vazia.\n");
+                    } else {
+                        remover(&listaUm);
+                    }
+                } else {
+                    if(isEmpty(&listaDois) == TRUE){
+                        printf("\nTurma vazia.\n");
+                    } else {
+                        remover(&listaDois);
+                    }
+                }
                 break;
             case 7:
-                printf("\nEm desenvolvimento\n");
+                printf("Que turma? (1/2): ");
+                scanf("%d",&turma);
+                while(turma != 1 && turma != 2){
+                    printf("Opcao invalida. Tente novamente: ");
+                    scanf("%d",&turma);
+                }
+
+                if(turma == 1){
+                    if(isEmpty(&listaUm) == TRUE){
+                        printf("\nTurma vazia.\n");
+                    } else {
+                        limparTurma(&listaUm);
+                    }
+                } else {
+                    if(isEmpty(&listaDois) == TRUE){
+                        printf("\nTurma vazia.\n");
+                    } else {
+                        limparTurma(&listaDois);
+                    }
+                }
                 break;
             case 0:
                 printf("\nEncerrando programa...\n");
@@ -367,5 +450,4 @@ int main(){
         }
 
     } while (op != 0);
-
 }
