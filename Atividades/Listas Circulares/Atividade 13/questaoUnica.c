@@ -46,6 +46,10 @@ void cadastrar(PontLDEC* lista, char nomeAux[40]){
         strcpy(novo->nome,nomeAux);
         printf("Media final: ");
         scanf("%f",&mediaAux);
+        while (mediaAux < 0 || mediaAux > 10){
+            printf("A media do aluno deve estar entre 0-10. Tente novamente: ");
+            scanf("%f",&mediaAux);
+        }
         novo->media = mediaAux;
         printf("Faltas: ");
         scanf("%d",&faltasAux);
@@ -73,6 +77,10 @@ void cadastrar(PontLDEC* lista, char nomeAux[40]){
             strcpy(novo->nome,nomeAux);
             printf("Media final: ");
             scanf("%f",&mediaAux);
+            while (mediaAux < 0 || mediaAux > 10){
+                printf("A media do aluno deve estar entre 0-10. Tente novamente: ");
+                scanf("%f",&mediaAux);
+            }
             novo->media = mediaAux;
             printf("Faltas: ");
             scanf("%d",&faltasAux);
@@ -86,6 +94,10 @@ void cadastrar(PontLDEC* lista, char nomeAux[40]){
             strcpy(novo->nome,nomeAux);
             printf("Media final: ");
             scanf("%f",&mediaAux);
+            while (mediaAux < 0 || mediaAux > 10){
+                printf("A media do aluno deve estar entre 0-10. Tente novamente: ");
+                scanf("%f",&mediaAux);
+            }
             novo->media = mediaAux;
             printf("Faltas: ");
             scanf("%d",&faltasAux);
@@ -110,6 +122,10 @@ void cadastrar(PontLDEC* lista, char nomeAux[40]){
                     strcpy(novo->nome,nomeAux);
                     printf("Media final: ");
                     scanf("%f",&mediaAux);
+                    while (mediaAux < 0 || mediaAux > 10){
+                        printf("A media do aluno deve estar entre 0-10. Tente novamente: ");
+                        scanf("%f",&mediaAux);
+                    }
                     novo->media = mediaAux;
                     printf("Faltas: ");
                     scanf("%d",&faltasAux);
@@ -169,6 +185,10 @@ void alterarMedia(PontLDEC* lista){
         scanf("%f",&mediaNova);
         while(mediaNova == aux->media){
             printf("Informe uma nova media diferente da atual: ");
+            scanf("%f",&mediaNova);
+        }
+        while (mediaNova < 0 || mediaNova > 10){
+            printf("A media do aluno deve estar entre 0-10. Tente novamente: ");
             scanf("%f",&mediaNova);
         }
         aux->media = mediaNova;
